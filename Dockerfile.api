@@ -1,0 +1,20 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install uv
+RUN pip install uv
+
+# Copy requirements from api directory
+COPY api/requirements.txt .
+
+# Install dependencies using uv
+# Note: Using uv pip install because input is requirements.txt
+RUN uv pip install --system -r requirements.txt
+
+# Copy source code
+COPY common ./common
+COPY api/app ./app
+
+# Start command
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

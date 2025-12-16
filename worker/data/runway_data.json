@@ -1,0 +1,22 @@
+[
+  {
+    "feed_id": 102934,
+    "facility_icao": "KORD",
+    "report_type": "RUNWAY_STATUS",
+    "status": "CLOSED",
+    "affected_entity": "28R/10L",
+    "closure_reason": "Routine Maintenance - Asphalt",
+    "time_active_utc": "2025-12-18T08:00:00Z",
+    "estimated_reopen_utc": "2025-12-18T16:00:00Z"
+  },
+  {
+    "feed_id": 102935,
+    "facility_icao": "KATL",
+    "report_type": "TAXIWAY_STATUS",
+    "status": "RESTRICTED",
+    "affected_entity": "Taxiway B",
+    "closure_reason": "Crane Activity near Hangar 3",
+    "time_active_utc": "2025-12-18T10:30:00Z",
+    "estimated_reopen_utc": "2025-12-20T23:59:00Z"
+  }
+]
