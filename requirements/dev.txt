@@ -1,3 +1,6 @@
 pytest
 httpx
 pytest-asyncio
+fastapi
+sqlalchemy
+pydantic
