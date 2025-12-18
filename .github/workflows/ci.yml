@@ -81,3 +81,87 @@ jobs:
             -t flos-worker:${{ github.sha }} \
             .
       # Ideally push to registry here
+
+  deploy:
+    name: Deploy to AWS
+    needs: [build-api, build-worker]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2 # Change to your preferred region
+
+      - name: Setup Node.js (for CDK)
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install CDK
+        run: npm install -g aws-cdk
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install CDK Python Dependencies
+        run: pip install -r deploy/requirements.txt
+
+      - name: Deploy ECR Repos
+        run: cdk deploy FlosEcrStack --require-approval never
+        working-directory: deploy
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and Push API Image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: flos-api
+          IMAGE_TAG: latest # And sha
+        run: |
+          docker build -f Dockerfile.api -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Build and Push Worker Image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: flos-worker
+          IMAGE_TAG: latest
+        run: |
+          docker build -f Dockerfile.worker -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Deploy Infrastructure
+        run: cdk deploy FlosNetworkDbStack FlosAppStack --require-approval never
+        working-directory: deploy
+
+      - name: Run Database Migrations
+        # Run a one-off task using the Worker definition which has the code and DB access
+        run: |
+          # Get Outputs from CDK (This is a bit hacky, better to use aws cloudformation describe-stacks)
+          # Alternatively, we just look up the resources by name or rely on the outputs printed in the previous step?
+          # We'll use the CLI to get the values we need to run the task
+
+          CLUSTER=$(aws cloudformation describe-stacks --stack-name FlosAppStack --query "Stacks[0].Outputs[?OutputKey=='ClusterName'].OutputValue" --output text)
+          TASK_DEF=$(aws cloudformation describe-stacks --stack-name FlosAppStack --query "Stacks[0].Outputs[?OutputKey=='WorkerTaskDefArn'].OutputValue" --output text)
+          SUBNETS=$(aws cloudformation describe-stacks --stack-name FlosAppStack --query "Stacks[0].Outputs[?OutputKey=='AppSubnetIds'].OutputValue" --output text)
+          SG=$(aws cloudformation describe-stacks --stack-name FlosAppStack --query "Stacks[0].Outputs[?OutputKey=='AppSecurityGroupId'].OutputValue" --output text)
+
+          echo "Running migrations on Cluster: $CLUSTER with Task: $TASK_DEF from Subnets: $SUBNETS and SG: $SG"
+
+          aws ecs run-task \
+            --cluster $CLUSTER \
+            --task-definition $TASK_DEF \
+            --launch-type FARGATE \
+            --network-configuration "awsvpcConfiguration={subnets=[$SUBNETS],securityGroups=[$SG],assignPublicIp=DISABLED}" \
+            --overrides "{\"containerOverrides\": [{\"name\": \"WorkerContainer\", \"command\": [\"alembic\", \"upgrade\", \"head\"]}]}"
