@@ -31,10 +31,17 @@ class AppStack(Stack):
         )
         
         # Allow DB access
-        # This creates the rule in the AppStack, avoiding cyclic dependency
-        db.connections.allow_default_port_from(
-            security_group,
-            "Allow connection from App SG"
+        # This creates the rule in the AppStack using a low-level construct
+        # avoiding the cyclic dependency that occurs when using db.connections.allow... 
+        # (which tries to modify the NetworkStack)
+        ec2.CfnSecurityGroupIngress(
+            self, "DbIngressFromApp",
+            group_id=db.connections.security_groups[0].security_group_id,
+            source_security_group_id=security_group.security_group_id,
+            ip_protocol="tcp",
+            from_port=5432,
+            to_port=5432,
+            description="Allow access from App SG"
         )
         
         db_secret = db.secret
