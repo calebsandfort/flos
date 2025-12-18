@@ -3,6 +3,7 @@ from aws_cdk import (
     aws_ecs as ecs,
     aws_ecs_patterns as ecs_patterns,
     aws_ec2 as ec2,
+    aws_rds as rds,
     aws_ecr as ecr,
     aws_secretsmanager as secretsmanager,
     CfnOutput,
