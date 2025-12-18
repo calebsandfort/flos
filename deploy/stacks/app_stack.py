@@ -58,9 +58,11 @@ class AppStack(Stack):
             "POSTGRES_USER": ecs.Secret.from_secrets_manager(db_secret, "username"),
             "POSTGRES_PASSWORD": ecs.Secret.from_secrets_manager(db_secret, "password"),
             "POSTGRES_HOST": ecs.Secret.from_secrets_manager(db_secret, "host"),
-            "POSTGRES_DB": ecs.Secret.from_secrets_manager(db_secret, "dbname"),
             "POSTGRES_PORT": ecs.Secret.from_secrets_manager(db_secret, "port"),
         }
+        
+        # Add explicit DB name to environment since it's not guaranteed in the generated secret
+        environment["POSTGRES_DB"] = "flos"
 
 
         # API Service (Public Load Balancer)
