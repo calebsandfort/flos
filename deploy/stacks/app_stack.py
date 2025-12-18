@@ -15,36 +15,30 @@ class AppStack(Stack):
                  vpc: ec2.Vpc, 
                  repo_api: ecr.Repository, 
                  repo_worker: ecr.Repository,
-                 db_secret: secretsmanager.ISecret,
-                 security_group: ec2.SecurityGroup,
+                 db: rds.DatabaseInstance,
                  **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         cluster = ecs.Cluster(self, "FlosCluster", vpc=vpc)
+        
+        # Security Group for App (API and Worker)
+        security_group = ec2.SecurityGroup(
+            self, "AppSecurityGroup",
+            vpc=vpc,
+            description="Security Group for Flos API and Worker",
+            allow_all_outbound=True
+        )
+        
+        # Allow DB access
+        # This creates the rule in the AppStack, avoiding cyclic dependency
+        db.connections.allow_default_port_from(
+            security_group,
+            "Allow connection from App SG"
+        )
+        
+        db_secret = db.secret
 
         # Define environment variables (DB Connection)
-        # We'll construct the connection string from the secret parts
-        # or just pass the secret ARN and let the app handle it?
-        # For simplicity, we'll pass the connection string if possible or individual vars.
-        # But for best practice, we should use secrets.
-        # However, standard practice is often to supply a DATABASE_URL.
-        # We can use `secretsmanager.Secret` to get the value.
-        
-        # NOTE: Parsing the secret in the container is safer. 
-        # For now, let's assume the app takes individual params or a connection string.
-        # We'll pass the JSON secret as a single environment variable 'DB_SECRET' 
-        # and update the app to parse it, OR we rely on ECS Secrets integration.
-        
-        # Let's use ECS Secrets to map specific keys to env vars
-        db_creds = ecs.Secret.from_secrets_manager(db_secret)
-        # That maps the WHOLE JSON. 
-        # We can map specific fields: ecs.Secret.from_secrets_manager(db_secret, "username")
-        
-        # Actually, let's just use the simpler approach of constructing the URL in the container 
-        # if the app expects a URL. Flos uses sqlalchemy so it likely needs a URL.
-        # Constructing it here is tricky without `Join`.
-        # Easier: Pass DB_HOST, DB_USER, DB_PASS, DB_NAME env vars.
-        
         environment = {
             "ENVIRONMENT": "production"
         }
@@ -52,6 +46,7 @@ class AppStack(Stack):
         secrets = {
             "DB_SECRET": ecs.Secret.from_secrets_manager(db_secret) # Pass the whole JSON
         }
+
         # The app will need to be smart enough to parse this or we change the app to use `aws-env` etc.
         # Or we map:
         env_secrets = {

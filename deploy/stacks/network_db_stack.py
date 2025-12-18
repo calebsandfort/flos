@@ -18,14 +18,6 @@ class NetworkDbStack(Stack):
             nat_gateways=1, # Save cost for dev
         )
 
-        # Security Group for App (API and Worker)
-        self.app_security_group = ec2.SecurityGroup(
-            self, "AppSecurityGroup",
-            vpc=self.vpc,
-            description="Security Group for Flos API and Worker",
-            allow_all_outbound=True
-        )
-
         # Database
         self.db = rds.DatabaseInstance(
             self, "FlosDB",
@@ -45,11 +37,3 @@ class NetworkDbStack(Stack):
             deletion_protection=False,
             database_name="flos"
         )
-
-        # Allow access from App SG
-        self.db.connections.allow_default_port_from(
-            self.app_security_group,
-            "Allow connection from App SG"
-        )
-
-        self.db_secret = self.db.secret

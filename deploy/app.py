@@ -19,8 +19,7 @@ app_stack = AppStack(app, "FlosAppStack",
     vpc=network.vpc,
     repo_api=ecr.repo_api,
     repo_worker=ecr.repo_worker,
-    db_secret=network.db_secret,
-    security_group=network.app_security_group,
+    db=network.db,
     env=env
 )
 
