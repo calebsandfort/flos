@@ -68,28 +68,42 @@ class AppStack(Stack):
         environment["POSTGRES_DB"] = "flos"
 
 
-        # API Service (Public Load Balancer)
-        self.api_service = ecs_patterns.ApplicationLoadBalancedFargateService(
-            self, "ApiService",
-            cluster=cluster,
+        # API Task Definition
+        task_def_api = ecs.FargateTaskDefinition(
+            self, "ApiTaskDef",
             cpu=256,
             memory_limit_mib=512,
+        )
+
+        container_api = task_def_api.add_container(
+            "ApiContainer",
+            image=ecs.ContainerImage.from_ecr_repository(repo_api, "latest"),
+            container_port=8000,
+            logging=ecs.LogDriver.aws_logs(stream_prefix="flos-api"),
+            environment=environment,
+            secrets=env_secrets,
+        )
+
+        # Allow Inbound 8000 (We need to do this on the SG)
+        security_group.add_ingress_rule(
+            ec2.Peer.any_ipv4(),
+            ec2.Port.tcp(8000),
+            "Allow API access from anywhere"
+        )
+
+        # API Service (Public IP, No LB)
+        self.api_service = ecs.FargateService(
+            self, "ApiService",
+            cluster=cluster,
+            task_definition=task_def_api,
             desired_count=1,
-            task_image_options=ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
-                image=ecs.ContainerImage.from_ecr_repository(repo_api, "latest"),
-                container_port=8000,
-                environment=environment,
-                secrets=env_secrets,
-            ),
-            public_load_balancer=True,
-            security_groups=[security_group] # Shared SG
+            assign_public_ip=True,
+            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),
+            security_groups=[security_group]
         )
         
-        # Health check adjustment
-        self.api_service.target_group.configure_health_check(
-            path="/docs", # Default FastAPI docs path or /health
-            healthy_http_codes="200-299"
-        )
+        # Output Service Name so we can find it
+        CfnOutput(self, "ApiServiceName", value=self.api_service.service_name)
 
         # Worker Service (No Load Balancer)
         task_def_worker = ecs.FargateTaskDefinition(
@@ -114,7 +128,7 @@ class AppStack(Stack):
             security_groups=[security_group] # Shared SG
         )
 
-        CfnOutput(self, "ApiUrl", value=self.api_service.load_balancer.load_balancer_dns_name)
+
         CfnOutput(self, "ClusterName", value=cluster.cluster_name)
         CfnOutput(self, "WorkerTaskDefArn", value=task_def_worker.task_definition_arn)
         CfnOutput(self, "AppSecurityGroupId", value=security_group.security_group_id)
