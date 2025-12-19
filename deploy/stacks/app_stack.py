@@ -78,7 +78,7 @@ class AppStack(Stack):
         container_api = task_def_api.add_container(
             "ApiContainer",
             image=ecs.ContainerImage.from_ecr_repository(repo_api, "latest"),
-            container_port=8000,
+            port_mappings=[ecs.PortMapping(container_port=8000)],
             logging=ecs.LogDriver.aws_logs(stream_prefix="flos-api"),
             environment=environment,
             secrets=env_secrets,
