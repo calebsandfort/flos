@@ -5,9 +5,8 @@ WORKDIR /app
 # Install uv
 RUN pip install uv
 
-# Copy requirements from api (using api requirements for now as common ones are there)
-# Ideally worker should have its own requirements.txt
-COPY api/requirements.txt .
+# Copy requirements for worker
+COPY worker/requirements.txt .
 
 # Install dependencies using uv
 RUN uv pip install --system -r requirements.txt
