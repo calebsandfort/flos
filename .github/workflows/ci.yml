@@ -127,19 +127,21 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: flos-api
-          IMAGE_TAG: latest # And sha
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -f Dockerfile.api -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker build -f Dockerfile.api -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Build and Push Worker Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: flos-worker
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -f Dockerfile.worker -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker build -f Dockerfile.worker -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Deploy Infrastructure
         run: cdk deploy FlosNetworkDbStack FlosAppStack --require-approval never -c image_tag=${{ github.sha }}
