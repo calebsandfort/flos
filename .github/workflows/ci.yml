@@ -148,7 +148,7 @@ jobs:
       - name: Run Database Migrations
         # Run a one-off task using the Worker definition which has the code and DB access
         run: |
-          # Get Outputs from CDK (This is a bit hacky, better to use aws cloudformation describe-stacks)
+          # Get Outputs from CDK (This is a bit hacky, better to use aws cloudformation describe-stacks) test
           # Alternatively, we just look up the resources by name or rely on the outputs printed in the previous step?
           # We'll use the CLI to get the values we need to run the task
 
