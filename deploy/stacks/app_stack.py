@@ -17,6 +17,7 @@ class AppStack(Stack):
                  repo_api: ecr.Repository, 
                  repo_worker: ecr.Repository,
                  db: rds.DatabaseInstance,
+                 image_tag: str = "latest",
                  **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -77,7 +78,7 @@ class AppStack(Stack):
 
         container_api = task_def_api.add_container(
             "ApiContainer",
-            image=ecs.ContainerImage.from_ecr_repository(repo_api, "latest"),
+            image=ecs.ContainerImage.from_ecr_repository(repo_api, image_tag),
             port_mappings=[ecs.PortMapping(container_port=8000)],
             logging=ecs.LogDriver.aws_logs(stream_prefix="flos-api"),
             environment=environment,
@@ -114,7 +115,7 @@ class AppStack(Stack):
         
         container_worker = task_def_worker.add_container(
             "WorkerContainer",
-            image=ecs.ContainerImage.from_ecr_repository(repo_worker, "latest"),
+            image=ecs.ContainerImage.from_ecr_repository(repo_worker, image_tag),
             logging=ecs.LogDriver.aws_logs(stream_prefix="flos-worker"),
             environment=environment,
             secrets=env_secrets,

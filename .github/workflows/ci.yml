@@ -142,7 +142,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       - name: Deploy Infrastructure
-        run: cdk deploy FlosNetworkDbStack FlosAppStack --require-approval never
+        run: cdk deploy FlosNetworkDbStack FlosAppStack --require-approval never -c image_tag=${{ github.sha }}
         working-directory: deploy
 
       - name: Run Database Migrations

@@ -15,11 +15,15 @@ env = cdk.Environment(
 ecr = EcrStack(app, "FlosEcrStack", env=env)
 network = NetworkDbStack(app, "FlosNetworkDbStack", env=env)
 
+# Check for image tag in context, otherwise default to latest
+tag = app.node.try_get_context("image_tag") or "latest"
+
 app_stack = AppStack(app, "FlosAppStack",
     vpc=network.vpc,
     repo_api=ecr.repo_api,
     repo_worker=ecr.repo_worker,
     db=network.db,
+    image_tag=tag,
     env=env
 )
 
