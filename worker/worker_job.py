@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 import json
 import re
 import datetime
@@ -248,4 +249,9 @@ def ingest_data():
         db.close()
 
 if __name__ == "__main__":
-    ingest_data()
+    print("Starting Worker Service...")
+    while True:
+        print(f"Running ingestion job at {datetime.datetime.now(timezone.utc)}")
+        ingest_data()
+        print("Sleeping for 60 seconds...")
+        time.sleep(60)
