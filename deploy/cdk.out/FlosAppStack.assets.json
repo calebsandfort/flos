@@ -1,0 +1,20 @@
+{
+  "version": "35.0.0",
+  "files": {
+    "f17ce30d5754f3d4ac20af349ac53748ffce3b321a78b140049bafae12a67c0c": {
+      "source": {
+        "path": "FlosAppStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "497706801192-us-east-2": {
+          "bucketName": "cdk-hnb659fds-assets-497706801192-us-east-2",
+          "objectKey": "f17ce30d5754f3d4ac20af349ac53748ffce3b321a78b140049bafae12a67c0c.json",
+          "region": "us-east-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-file-publishing-role-497706801192-us-east-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

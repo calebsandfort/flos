@@ -15,8 +15,8 @@ services:
 
   api:
     build:
-      context: ./api
-      dockerfile: ../Dockerfile.api
+      context: .
+      dockerfile: Dockerfile.api
     ports:
       - "8000:8000"
     environment:
@@ -24,18 +24,35 @@ services:
     depends_on:
       - db
     volumes:
-      - ./api:/app
+      - ./api/app:/app/app
+      - ./common:/app/common
 
   worker:
     build:
-      context: ./worker
-      dockerfile: ../Dockerfile.worker
+      context: .
+      dockerfile: Dockerfile.worker
     environment:
       - DATABASE_URL=postgresql://user:password@db:5432/flos_db
     depends_on:
       - db
     volumes:
-      - ./worker:/app
+      - ./worker:/app/worker
+      - ./common:/app/common
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      target: builder # Use builder stage for dev (or create a dev stage, but usually mapping volume is enough if we override command)
+    environment:
+      - NODE_ENV=development
+      - CI=true # Suppress interactive TTY prompts for pnpm
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: sh -c "npm install -g pnpm && pnpm i && pnpm dev"
 
 volumes:
   postgres_data:

@@ -1,0 +1,47 @@
+# General
+.git
+.gitignore
+.dockerignore
+.env
+.env.template
+README.md
+
+# Python
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/build
+**/dist
+**/downloads
+**/eggs
+**/.eggs
+**/lib64
+**/parts
+**/sdist
+**/var
+**/wheels
+**/*.egg-info
+**/.installed.cfg
+**/*.egg
+**/MANIFEST
+**/venv
+**/.venv
+**/env
+**/.env
+**/*.db
+**/*.sqlite3
+**/.coverage
+**/.pytest_cache
+**/.vscode
+**/.idea
+
+# Node / Frontend
+**/node_modules
+**/npm-debug.log
+**/yarn-error.log
+**/pnpm-debug.log
+**/.next
+**/out
+**/coverage

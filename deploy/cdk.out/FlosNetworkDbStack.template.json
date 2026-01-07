@@ -1,0 +1,542 @@
+{
+ "Resources": {
+  "FlosVpc9AB3490C": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/Resource"
+   }
+  },
+  "FlosVpcPublicSubnet1Subnet076D2191": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-2a",
+    "CidrBlock": "10.0.0.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/Subnet"
+   }
+  },
+  "FlosVpcPublicSubnet1RouteTableABC70481": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/RouteTable"
+   }
+  },
+  "FlosVpcPublicSubnet1RouteTableAssociation61F67520": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "FlosVpcPublicSubnet1RouteTableABC70481"
+    },
+    "SubnetId": {
+     "Ref": "FlosVpcPublicSubnet1Subnet076D2191"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "FlosVpcPublicSubnet1DefaultRouteB17EDB1E": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "FlosVpcIGWC1AC8BCE"
+    },
+    "RouteTableId": {
+     "Ref": "FlosVpcPublicSubnet1RouteTableABC70481"
+    }
+   },
+   "DependsOn": [
+    "FlosVpcVPCGW78A389DE"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "FlosVpcPublicSubnet2SubnetD49BAB82": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-2b",
+    "CidrBlock": "10.0.64.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/Subnet"
+   }
+  },
+  "FlosVpcPublicSubnet2RouteTableDE3A6638": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/RouteTable"
+   }
+  },
+  "FlosVpcPublicSubnet2RouteTableAssociationB2D6A071": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "FlosVpcPublicSubnet2RouteTableDE3A6638"
+    },
+    "SubnetId": {
+     "Ref": "FlosVpcPublicSubnet2SubnetD49BAB82"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "FlosVpcPublicSubnet2DefaultRoute3B664F56": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "FlosVpcIGWC1AC8BCE"
+    },
+    "RouteTableId": {
+     "Ref": "FlosVpcPublicSubnet2RouteTableDE3A6638"
+    }
+   },
+   "DependsOn": [
+    "FlosVpcVPCGW78A389DE"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "FlosVpcIsolatedSubnet1SubnetEACDC614": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-2a",
+    "CidrBlock": "10.0.128.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Isolated"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Isolated"
+     },
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/Subnet"
+   }
+  },
+  "FlosVpcIsolatedSubnet1RouteTableD9C54CF0": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/RouteTable"
+   }
+  },
+  "FlosVpcIsolatedSubnet1RouteTableAssociation5CB94006": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "FlosVpcIsolatedSubnet1RouteTableD9C54CF0"
+    },
+    "SubnetId": {
+     "Ref": "FlosVpcIsolatedSubnet1SubnetEACDC614"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/RouteTableAssociation"
+   }
+  },
+  "FlosVpcIsolatedSubnet2Subnet6776EDD4": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-2b",
+    "CidrBlock": "10.0.192.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Isolated"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Isolated"
+     },
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/Subnet"
+   }
+  },
+  "FlosVpcIsolatedSubnet2RouteTable0BCA53E4": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/RouteTable"
+   }
+  },
+  "FlosVpcIsolatedSubnet2RouteTableAssociation7A4B6421": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "FlosVpcIsolatedSubnet2RouteTable0BCA53E4"
+    },
+    "SubnetId": {
+     "Ref": "FlosVpcIsolatedSubnet2Subnet6776EDD4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/RouteTableAssociation"
+   }
+  },
+  "FlosVpcIGWC1AC8BCE": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "FlosNetworkDbStack/FlosVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/IGW"
+   }
+  },
+  "FlosVpcVPCGW78A389DE": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "FlosVpcIGWC1AC8BCE"
+    },
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosVpc/VPCGW"
+   }
+  },
+  "FlosDBSubnetGroupA32F66EB": {
+   "Type": "AWS::RDS::DBSubnetGroup",
+   "Properties": {
+    "DBSubnetGroupDescription": "Subnet group for FlosDB database",
+    "SubnetIds": [
+     {
+      "Ref": "FlosVpcIsolatedSubnet1SubnetEACDC614"
+     },
+     {
+      "Ref": "FlosVpcIsolatedSubnet2Subnet6776EDD4"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosDB/SubnetGroup/Default"
+   }
+  },
+  "FlosDBSecurityGroupF0625AB5": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for FlosDB database",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "FlosVpc9AB3490C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosDB/SecurityGroup/Resource"
+   }
+  },
+  "FlosDBSecretEF85A69B": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Generated by the CDK for stack: ",
+       {
+        "Ref": "AWS::StackName"
+       }
+      ]
+     ]
+    },
+    "GenerateSecretString": {
+     "ExcludeCharacters": " %+~`#$&*()|[]{}:;<>?!'/@\"\\",
+     "GenerateStringKey": "password",
+     "PasswordLength": 30,
+     "SecretStringTemplate": "{\"username\":\"postgres\"}"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosDB/Secret/Resource"
+   }
+  },
+  "FlosDBSecretAttachmentDE9154FC": {
+   "Type": "AWS::SecretsManager::SecretTargetAttachment",
+   "Properties": {
+    "SecretId": {
+     "Ref": "FlosDBSecretEF85A69B"
+    },
+    "TargetId": {
+     "Ref": "FlosDB33621BE8"
+    },
+    "TargetType": "AWS::RDS::DBInstance"
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosDB/Secret/Attachment/Resource"
+   }
+  },
+  "FlosDB33621BE8": {
+   "Type": "AWS::RDS::DBInstance",
+   "Properties": {
+    "AllocatedStorage": "20",
+    "CopyTagsToSnapshot": true,
+    "DBInstanceClass": "db.t3.micro",
+    "DBName": "flos",
+    "DBSubnetGroupName": {
+     "Ref": "FlosDBSubnetGroupA32F66EB"
+    },
+    "DeletionProtection": false,
+    "Engine": "postgres",
+    "EngineVersion": "15",
+    "MasterUserPassword": {
+     "Fn::Join": [
+      "",
+      [
+       "{{resolve:secretsmanager:",
+       {
+        "Ref": "FlosDBSecretEF85A69B"
+       },
+       ":SecretString:password::}}"
+      ]
+     ]
+    },
+    "MasterUsername": {
+     "Fn::Join": [
+      "",
+      [
+       "{{resolve:secretsmanager:",
+       {
+        "Ref": "FlosDBSecretEF85A69B"
+       },
+       ":SecretString:username::}}"
+      ]
+     ]
+    },
+    "PubliclyAccessible": false,
+    "StorageType": "gp2",
+    "VPCSecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "FlosDBSecurityGroupF0625AB5",
+       "GroupId"
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/FlosDB/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12Q3Y6CQAyFn8X7YVY0+wAqifGOgPF2U2pXZ4UZM+0sIYR33wjyk71q+/W0p+lGx/Far1dQc4TXR1SaQre5AD4U1PzVEm50e3miOnzbS3pQaShKg3koLMmLzVnmgtAZipJmPrMds0MDYpydxCr15heE5h0nK+QtyRGEamjepu9qJwJ4r8iKygmDN9IcvQvP3m4JOuWvrNsEBApgOlkWsEhq8Jlmkv0SjOqc0A/HJPtxslPcU67Awo28bgfLl3AIZ/A3ksWFk+B/p+tURuyCx/5PY96ptJG7sx9bHW/15+qHjYl8sGIq0tkQ/wATX42PrAEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosNetworkDbStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ExportsOutputRefFlosVpc9AB3490C6658D48D": {
+   "Value": {
+    "Ref": "FlosVpc9AB3490C"
+   },
+   "Export": {
+    "Name": "FlosNetworkDbStack:ExportsOutputRefFlosVpc9AB3490C6658D48D"
+   }
+  },
+  "ExportsOutputFnGetAttFlosDBSecurityGroupF0625AB5GroupIdF69568DA": {
+   "Value": {
+    "Fn::GetAtt": [
+     "FlosDBSecurityGroupF0625AB5",
+     "GroupId"
+    ]
+   },
+   "Export": {
+    "Name": "FlosNetworkDbStack:ExportsOutputFnGetAttFlosDBSecurityGroupF0625AB5GroupIdF69568DA"
+   }
+  },
+  "ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B": {
+   "Value": {
+    "Ref": "FlosDBSecretAttachmentDE9154FC"
+   },
+   "Export": {
+    "Name": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+   }
+  },
+  "ExportsOutputRefFlosVpcPublicSubnet1Subnet076D219138BAFFAC": {
+   "Value": {
+    "Ref": "FlosVpcPublicSubnet1Subnet076D2191"
+   },
+   "Export": {
+    "Name": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet1Subnet076D219138BAFFAC"
+   }
+  },
+  "ExportsOutputRefFlosVpcPublicSubnet2SubnetD49BAB82243E3E32": {
+   "Value": {
+    "Ref": "FlosVpcPublicSubnet2SubnetD49BAB82"
+   },
+   "Export": {
+    "Name": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet2SubnetD49BAB82243E3E32"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

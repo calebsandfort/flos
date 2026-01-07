@@ -1,0 +1,1956 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "FlosEcrStack": {
+        "id": "FlosEcrStack",
+        "path": "FlosEcrStack",
+        "children": {
+          "ApiRepo": {
+            "id": "ApiRepo",
+            "path": "FlosEcrStack/ApiRepo",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "FlosEcrStack/ApiRepo/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECR::Repository",
+                  "aws:cdk:cloudformation:props": {
+                    "repositoryName": "flos-api"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecr.CfnRepository",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ecr.Repository",
+              "version": "2.110.0"
+            }
+          },
+          "WorkerRepo": {
+            "id": "WorkerRepo",
+            "path": "FlosEcrStack/WorkerRepo",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "FlosEcrStack/WorkerRepo/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECR::Repository",
+                  "aws:cdk:cloudformation:props": {
+                    "repositoryName": "flos-worker"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecr.CfnRepository",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ecr.Repository",
+              "version": "2.110.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "FlosEcrStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "FlosEcrStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.4"
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "FlosEcrStack/Exports",
+            "children": {
+              "Output{\"Fn::GetAtt\":[\"ApiRepoEFA7BA97\",\"Arn\"]}": {
+                "id": "Output{\"Fn::GetAtt\":[\"ApiRepoEFA7BA97\",\"Arn\"]}",
+                "path": "FlosEcrStack/Exports/Output{\"Fn::GetAtt\":[\"ApiRepoEFA7BA97\",\"Arn\"]}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              },
+              "Output{\"Ref\":\"ApiRepoEFA7BA97\"}": {
+                "id": "Output{\"Ref\":\"ApiRepoEFA7BA97\"}",
+                "path": "FlosEcrStack/Exports/Output{\"Ref\":\"ApiRepoEFA7BA97\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              },
+              "Output{\"Fn::GetAtt\":[\"WorkerRepoEE566D3E\",\"Arn\"]}": {
+                "id": "Output{\"Fn::GetAtt\":[\"WorkerRepoEE566D3E\",\"Arn\"]}",
+                "path": "FlosEcrStack/Exports/Output{\"Fn::GetAtt\":[\"WorkerRepoEE566D3E\",\"Arn\"]}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              },
+              "Output{\"Ref\":\"WorkerRepoEE566D3E\"}": {
+                "id": "Output{\"Ref\":\"WorkerRepoEE566D3E\"}",
+                "path": "FlosEcrStack/Exports/Output{\"Ref\":\"WorkerRepoEE566D3E\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.4"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "FlosEcrStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.110.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "FlosEcrStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.110.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.110.0"
+        }
+      },
+      "FlosNetworkDbStack": {
+        "id": "FlosNetworkDbStack",
+        "path": "FlosNetworkDbStack",
+        "children": {
+          "FlosVpc": {
+            "id": "FlosVpc",
+            "path": "FlosNetworkDbStack/FlosVpc",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "FlosNetworkDbStack/FlosVpc/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
+                  "aws:cdk:cloudformation:props": {
+                    "cidrBlock": "10.0.0.0/16",
+                    "enableDnsHostnames": true,
+                    "enableDnsSupport": true,
+                    "instanceTenancy": "default",
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "FlosNetworkDbStack/FlosVpc"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnVPC",
+                  "version": "2.110.0"
+                }
+              },
+              "PublicSubnet1": {
+                "id": "PublicSubnet1",
+                "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": "us-east-2a",
+                        "cidrBlock": "10.0.0.0/18",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "FlosNetworkDbStack/FlosVpc/PublicSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "FlosNetworkDbStack/FlosVpc/PublicSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "FlosVpcPublicSubnet1RouteTableABC70481"
+                        },
+                        "subnetId": {
+                          "Ref": "FlosVpcPublicSubnet1Subnet076D2191"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet1/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "FlosVpcIGWC1AC8BCE"
+                        },
+                        "routeTableId": {
+                          "Ref": "FlosVpcPublicSubnet1RouteTableABC70481"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PublicSubnet",
+                  "version": "2.110.0"
+                }
+              },
+              "PublicSubnet2": {
+                "id": "PublicSubnet2",
+                "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": "us-east-2b",
+                        "cidrBlock": "10.0.64.0/18",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "FlosNetworkDbStack/FlosVpc/PublicSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "FlosNetworkDbStack/FlosVpc/PublicSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "FlosVpcPublicSubnet2RouteTableDE3A6638"
+                        },
+                        "subnetId": {
+                          "Ref": "FlosVpcPublicSubnet2SubnetD49BAB82"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "FlosNetworkDbStack/FlosVpc/PublicSubnet2/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "FlosVpcIGWC1AC8BCE"
+                        },
+                        "routeTableId": {
+                          "Ref": "FlosVpcPublicSubnet2RouteTableDE3A6638"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PublicSubnet",
+                  "version": "2.110.0"
+                }
+              },
+              "IsolatedSubnet1": {
+                "id": "IsolatedSubnet1",
+                "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": "us-east-2a",
+                        "cidrBlock": "10.0.128.0/18",
+                        "mapPublicIpOnLaunch": false,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Isolated"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Isolated"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "FlosVpcIsolatedSubnet1RouteTableD9C54CF0"
+                        },
+                        "subnetId": {
+                          "Ref": "FlosVpcIsolatedSubnet1SubnetEACDC614"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PrivateSubnet",
+                  "version": "2.110.0"
+                }
+              },
+              "IsolatedSubnet2": {
+                "id": "IsolatedSubnet2",
+                "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": "us-east-2b",
+                        "cidrBlock": "10.0.192.0/18",
+                        "mapPublicIpOnLaunch": false,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Isolated"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Isolated"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "FlosVpcIsolatedSubnet2RouteTable0BCA53E4"
+                        },
+                        "subnetId": {
+                          "Ref": "FlosVpcIsolatedSubnet2Subnet6776EDD4"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PrivateSubnet",
+                  "version": "2.110.0"
+                }
+              },
+              "IGW": {
+                "id": "IGW",
+                "path": "FlosNetworkDbStack/FlosVpc/IGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::InternetGateway",
+                  "aws:cdk:cloudformation:props": {
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "FlosNetworkDbStack/FlosVpc"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnInternetGateway",
+                  "version": "2.110.0"
+                }
+              },
+              "VPCGW": {
+                "id": "VPCGW",
+                "path": "FlosNetworkDbStack/FlosVpc/VPCGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPCGatewayAttachment",
+                  "aws:cdk:cloudformation:props": {
+                    "internetGatewayId": {
+                      "Ref": "FlosVpcIGWC1AC8BCE"
+                    },
+                    "vpcId": {
+                      "Ref": "FlosVpc9AB3490C"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnVPCGatewayAttachment",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ec2.Vpc",
+              "version": "2.110.0"
+            }
+          },
+          "FlosDB": {
+            "id": "FlosDB",
+            "path": "FlosNetworkDbStack/FlosDB",
+            "children": {
+              "SubnetGroup": {
+                "id": "SubnetGroup",
+                "path": "FlosNetworkDbStack/FlosDB/SubnetGroup",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "FlosNetworkDbStack/FlosDB/SubnetGroup/Default",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::RDS::DBSubnetGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "dbSubnetGroupDescription": "Subnet group for FlosDB database",
+                        "subnetIds": [
+                          {
+                            "Ref": "FlosVpcIsolatedSubnet1SubnetEACDC614"
+                          },
+                          {
+                            "Ref": "FlosVpcIsolatedSubnet2Subnet6776EDD4"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_rds.CfnDBSubnetGroup",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.SubnetGroup",
+                  "version": "2.110.0"
+                }
+              },
+              "SecurityGroup": {
+                "id": "SecurityGroup",
+                "path": "FlosNetworkDbStack/FlosDB/SecurityGroup",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "FlosNetworkDbStack/FlosDB/SecurityGroup/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "groupDescription": "Security group for FlosDB database",
+                        "securityGroupEgress": [
+                          {
+                            "cidrIp": "0.0.0.0/0",
+                            "description": "Allow all outbound traffic by default",
+                            "ipProtocol": "-1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "FlosVpc9AB3490C"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
+                  "version": "2.110.0"
+                }
+              },
+              "Secret": {
+                "id": "Secret",
+                "path": "FlosNetworkDbStack/FlosDB/Secret",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "FlosNetworkDbStack/FlosDB/Secret/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SecretsManager::Secret",
+                      "aws:cdk:cloudformation:props": {
+                        "description": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "Generated by the CDK for stack: ",
+                              {
+                                "Ref": "AWS::StackName"
+                              }
+                            ]
+                          ]
+                        },
+                        "generateSecretString": {
+                          "passwordLength": 30,
+                          "secretStringTemplate": "{\"username\":\"postgres\"}",
+                          "generateStringKey": "password",
+                          "excludeCharacters": " %+~`#$&*()|[]{}:;<>?!'/@\"\\"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_secretsmanager.CfnSecret",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Attachment": {
+                    "id": "Attachment",
+                    "path": "FlosNetworkDbStack/FlosDB/Secret/Attachment",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "FlosNetworkDbStack/FlosDB/Secret/Attachment/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::SecretsManager::SecretTargetAttachment",
+                          "aws:cdk:cloudformation:props": {
+                            "secretId": {
+                              "Ref": "FlosDBSecretEF85A69B"
+                            },
+                            "targetId": {
+                              "Ref": "FlosDB33621BE8"
+                            },
+                            "targetType": "AWS::RDS::DBInstance"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_secretsmanager.CfnSecretTargetAttachment",
+                          "version": "2.110.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_secretsmanager.SecretTargetAttachment",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.DatabaseSecret",
+                  "version": "2.110.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "FlosNetworkDbStack/FlosDB/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::RDS::DBInstance",
+                  "aws:cdk:cloudformation:props": {
+                    "allocatedStorage": "20",
+                    "copyTagsToSnapshot": true,
+                    "dbInstanceClass": "db.t3.micro",
+                    "dbName": "flos",
+                    "dbSubnetGroupName": {
+                      "Ref": "FlosDBSubnetGroupA32F66EB"
+                    },
+                    "deletionProtection": false,
+                    "engine": "postgres",
+                    "engineVersion": "15",
+                    "masterUsername": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "{{resolve:secretsmanager:",
+                          {
+                            "Ref": "FlosDBSecretEF85A69B"
+                          },
+                          ":SecretString:username::}}"
+                        ]
+                      ]
+                    },
+                    "masterUserPassword": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "{{resolve:secretsmanager:",
+                          {
+                            "Ref": "FlosDBSecretEF85A69B"
+                          },
+                          ":SecretString:password::}}"
+                        ]
+                      ]
+                    },
+                    "publiclyAccessible": false,
+                    "storageType": "gp2",
+                    "vpcSecurityGroups": [
+                      {
+                        "Fn::GetAtt": [
+                          "FlosDBSecurityGroupF0625AB5",
+                          "GroupId"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.CfnDBInstance",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_rds.DatabaseInstance",
+              "version": "2.110.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "FlosNetworkDbStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "FlosNetworkDbStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.4"
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "FlosNetworkDbStack/Exports",
+            "children": {
+              "Output{\"Ref\":\"FlosVpc9AB3490C\"}": {
+                "id": "Output{\"Ref\":\"FlosVpc9AB3490C\"}",
+                "path": "FlosNetworkDbStack/Exports/Output{\"Ref\":\"FlosVpc9AB3490C\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              },
+              "Output{\"Fn::GetAtt\":[\"FlosDBSecurityGroupF0625AB5\",\"GroupId\"]}": {
+                "id": "Output{\"Fn::GetAtt\":[\"FlosDBSecurityGroupF0625AB5\",\"GroupId\"]}",
+                "path": "FlosNetworkDbStack/Exports/Output{\"Fn::GetAtt\":[\"FlosDBSecurityGroupF0625AB5\",\"GroupId\"]}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              },
+              "Output{\"Ref\":\"FlosDBSecretAttachmentDE9154FC\"}": {
+                "id": "Output{\"Ref\":\"FlosDBSecretAttachmentDE9154FC\"}",
+                "path": "FlosNetworkDbStack/Exports/Output{\"Ref\":\"FlosDBSecretAttachmentDE9154FC\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              },
+              "Output{\"Ref\":\"FlosVpcPublicSubnet1Subnet076D2191\"}": {
+                "id": "Output{\"Ref\":\"FlosVpcPublicSubnet1Subnet076D2191\"}",
+                "path": "FlosNetworkDbStack/Exports/Output{\"Ref\":\"FlosVpcPublicSubnet1Subnet076D2191\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              },
+              "Output{\"Ref\":\"FlosVpcPublicSubnet2SubnetD49BAB82\"}": {
+                "id": "Output{\"Ref\":\"FlosVpcPublicSubnet2SubnetD49BAB82\"}",
+                "path": "FlosNetworkDbStack/Exports/Output{\"Ref\":\"FlosVpcPublicSubnet2SubnetD49BAB82\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.4"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "FlosNetworkDbStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.110.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "FlosNetworkDbStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.110.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.110.0"
+        }
+      },
+      "FlosAppStack": {
+        "id": "FlosAppStack",
+        "path": "FlosAppStack",
+        "children": {
+          "FlosCluster": {
+            "id": "FlosCluster",
+            "path": "FlosAppStack/FlosCluster",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "FlosAppStack/FlosCluster/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECS::Cluster",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecs.CfnCluster",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ecs.Cluster",
+              "version": "2.110.0"
+            }
+          },
+          "AppSecurityGroup": {
+            "id": "AppSecurityGroup",
+            "path": "FlosAppStack/AppSecurityGroup",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "FlosAppStack/AppSecurityGroup/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "groupDescription": "Security Group for Flos API and Worker",
+                    "securityGroupEgress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "description": "Allow all outbound traffic by default",
+                        "ipProtocol": "-1"
+                      }
+                    ],
+                    "securityGroupIngress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "ipProtocol": "tcp",
+                        "fromPort": 8000,
+                        "toPort": 8000,
+                        "description": "Allow API access from anywhere"
+                      }
+                    ],
+                    "vpcId": {
+                      "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpc9AB3490C6658D48D"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
+              "version": "2.110.0"
+            }
+          },
+          "DbIngressFromApp": {
+            "id": "DbIngressFromApp",
+            "path": "FlosAppStack/DbIngressFromApp",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupIngress",
+              "aws:cdk:cloudformation:props": {
+                "description": "Allow access from App SG",
+                "fromPort": 5432,
+                "groupId": {
+                  "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputFnGetAttFlosDBSecurityGroupF0625AB5GroupIdF69568DA"
+                },
+                "ipProtocol": "tcp",
+                "sourceSecurityGroupId": {
+                  "Fn::GetAtt": [
+                    "AppSecurityGroupC396D536",
+                    "GroupId"
+                  ]
+                },
+                "toPort": 5432
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroupIngress",
+              "version": "2.110.0"
+            }
+          },
+          "ApiTaskDef": {
+            "id": "ApiTaskDef",
+            "path": "FlosAppStack/ApiTaskDef",
+            "children": {
+              "TaskRole": {
+                "id": "TaskRole",
+                "path": "FlosAppStack/ApiTaskDef/TaskRole",
+                "children": {
+                  "ImportTaskRole": {
+                    "id": "ImportTaskRole",
+                    "path": "FlosAppStack/ApiTaskDef/TaskRole/ImportTaskRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "FlosAppStack/ApiTaskDef/TaskRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "ecs-tasks.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.110.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "FlosAppStack/ApiTaskDef/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECS::TaskDefinition",
+                  "aws:cdk:cloudformation:props": {
+                    "containerDefinitions": [
+                      {
+                        "essential": true,
+                        "image": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              {
+                                "Fn::Select": [
+                                  4,
+                                  {
+                                    "Fn::Split": [
+                                      ":",
+                                      {
+                                        "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              ".dkr.ecr.",
+                              {
+                                "Fn::Select": [
+                                  3,
+                                  {
+                                    "Fn::Split": [
+                                      ":",
+                                      {
+                                        "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              ".",
+                              {
+                                "Ref": "AWS::URLSuffix"
+                              },
+                              "/",
+                              {
+                                "Fn::ImportValue": "FlosEcrStack:ExportsOutputRefApiRepoEFA7BA97FC7F6607"
+                              },
+                              ":latest"
+                            ]
+                          ]
+                        },
+                        "name": "ApiContainer",
+                        "portMappings": [
+                          {
+                            "containerPort": 8000,
+                            "protocol": "tcp"
+                          }
+                        ],
+                        "logConfiguration": {
+                          "logDriver": "awslogs",
+                          "options": {
+                            "awslogs-group": {
+                              "Ref": "ApiTaskDefApiContainerLogGroup0ACF4D7F"
+                            },
+                            "awslogs-stream-prefix": "flos-api",
+                            "awslogs-region": "us-east-2"
+                          }
+                        },
+                        "environment": [
+                          {
+                            "name": "ENVIRONMENT",
+                            "value": "production"
+                          },
+                          {
+                            "name": "POSTGRES_DB",
+                            "value": "flos"
+                          }
+                        ],
+                        "secrets": [
+                          {
+                            "name": "POSTGRES_USER",
+                            "valueFrom": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  },
+                                  ":username::"
+                                ]
+                              ]
+                            }
+                          },
+                          {
+                            "name": "POSTGRES_PASSWORD",
+                            "valueFrom": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  },
+                                  ":password::"
+                                ]
+                              ]
+                            }
+                          },
+                          {
+                            "name": "POSTGRES_HOST",
+                            "valueFrom": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  },
+                                  ":host::"
+                                ]
+                              ]
+                            }
+                          },
+                          {
+                            "name": "POSTGRES_PORT",
+                            "valueFrom": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  },
+                                  ":port::"
+                                ]
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "cpu": "256",
+                    "executionRoleArn": {
+                      "Fn::GetAtt": [
+                        "ApiTaskDefExecutionRoleE6ABB053",
+                        "Arn"
+                      ]
+                    },
+                    "family": "FlosAppStackApiTaskDef2355B7AD",
+                    "memory": "512",
+                    "networkMode": "awsvpc",
+                    "requiresCompatibilities": [
+                      "FARGATE"
+                    ],
+                    "taskRoleArn": {
+                      "Fn::GetAtt": [
+                        "ApiTaskDefTaskRole76FB19FA",
+                        "Arn"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecs.CfnTaskDefinition",
+                  "version": "2.110.0"
+                }
+              },
+              "ApiContainer": {
+                "id": "ApiContainer",
+                "path": "FlosAppStack/ApiTaskDef/ApiContainer",
+                "children": {
+                  "LogGroup": {
+                    "id": "LogGroup",
+                    "path": "FlosAppStack/ApiTaskDef/ApiContainer/LogGroup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "FlosAppStack/ApiTaskDef/ApiContainer/LogGroup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                          "aws:cdk:cloudformation:props": {}
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                          "version": "2.110.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecs.ContainerDefinition",
+                  "version": "2.110.0"
+                }
+              },
+              "ExecutionRole": {
+                "id": "ExecutionRole",
+                "path": "FlosAppStack/ApiTaskDef/ExecutionRole",
+                "children": {
+                  "ImportExecutionRole": {
+                    "id": "ImportExecutionRole",
+                    "path": "FlosAppStack/ApiTaskDef/ExecutionRole/ImportExecutionRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "FlosAppStack/ApiTaskDef/ExecutionRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "ecs-tasks.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "FlosAppStack/ApiTaskDef/ExecutionRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "FlosAppStack/ApiTaskDef/ExecutionRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "ecr:BatchCheckLayerAvailability",
+                                    "ecr:BatchGetImage",
+                                    "ecr:GetDownloadUrlForLayer"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA"
+                                  }
+                                },
+                                {
+                                  "Action": "ecr:GetAuthorizationToken",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                },
+                                {
+                                  "Action": [
+                                    "logs:CreateLogStream",
+                                    "logs:PutLogEvents"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "ApiTaskDefApiContainerLogGroup0ACF4D7F",
+                                      "Arn"
+                                    ]
+                                  }
+                                },
+                                {
+                                  "Action": [
+                                    "secretsmanager:DescribeSecret",
+                                    "secretsmanager:GetSecretValue"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "ApiTaskDefExecutionRoleDefaultPolicy358EAD94",
+                            "roles": [
+                              {
+                                "Ref": "ApiTaskDefExecutionRoleE6ABB053"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.110.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ecs.FargateTaskDefinition",
+              "version": "2.110.0"
+            }
+          },
+          "ApiService": {
+            "id": "ApiService",
+            "path": "FlosAppStack/ApiService",
+            "children": {
+              "Service": {
+                "id": "Service",
+                "path": "FlosAppStack/ApiService/Service",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECS::Service",
+                  "aws:cdk:cloudformation:props": {
+                    "cluster": {
+                      "Ref": "FlosCluster7B2ABFA0"
+                    },
+                    "deploymentConfiguration": {
+                      "maximumPercent": 200,
+                      "minimumHealthyPercent": 50,
+                      "alarms": {
+                        "alarmNames": [],
+                        "enable": false,
+                        "rollback": false
+                      }
+                    },
+                    "desiredCount": 1,
+                    "enableEcsManagedTags": false,
+                    "launchType": "FARGATE",
+                    "networkConfiguration": {
+                      "awsvpcConfiguration": {
+                        "assignPublicIp": "ENABLED",
+                        "subnets": [
+                          {
+                            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet1Subnet076D219138BAFFAC"
+                          },
+                          {
+                            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet2SubnetD49BAB82243E3E32"
+                          }
+                        ],
+                        "securityGroups": [
+                          {
+                            "Fn::GetAtt": [
+                              "AppSecurityGroupC396D536",
+                              "GroupId"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "taskDefinition": {
+                      "Ref": "ApiTaskDef37DBDBD0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecs.CfnService",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ecs.FargateService",
+              "version": "2.110.0"
+            }
+          },
+          "ApiServiceName": {
+            "id": "ApiServiceName",
+            "path": "FlosAppStack/ApiServiceName",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.110.0"
+            }
+          },
+          "WorkerTaskDef": {
+            "id": "WorkerTaskDef",
+            "path": "FlosAppStack/WorkerTaskDef",
+            "children": {
+              "TaskRole": {
+                "id": "TaskRole",
+                "path": "FlosAppStack/WorkerTaskDef/TaskRole",
+                "children": {
+                  "ImportTaskRole": {
+                    "id": "ImportTaskRole",
+                    "path": "FlosAppStack/WorkerTaskDef/TaskRole/ImportTaskRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "FlosAppStack/WorkerTaskDef/TaskRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "ecs-tasks.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.110.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "FlosAppStack/WorkerTaskDef/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECS::TaskDefinition",
+                  "aws:cdk:cloudformation:props": {
+                    "containerDefinitions": [
+                      {
+                        "essential": true,
+                        "image": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              {
+                                "Fn::Select": [
+                                  4,
+                                  {
+                                    "Fn::Split": [
+                                      ":",
+                                      {
+                                        "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              ".dkr.ecr.",
+                              {
+                                "Fn::Select": [
+                                  3,
+                                  {
+                                    "Fn::Split": [
+                                      ":",
+                                      {
+                                        "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              ".",
+                              {
+                                "Ref": "AWS::URLSuffix"
+                              },
+                              "/",
+                              {
+                                "Fn::ImportValue": "FlosEcrStack:ExportsOutputRefWorkerRepoEE566D3E36CC6BFB"
+                              },
+                              ":latest"
+                            ]
+                          ]
+                        },
+                        "name": "WorkerContainer",
+                        "logConfiguration": {
+                          "logDriver": "awslogs",
+                          "options": {
+                            "awslogs-group": {
+                              "Ref": "WorkerTaskDefWorkerContainerLogGroup93EC44E5"
+                            },
+                            "awslogs-stream-prefix": "flos-worker",
+                            "awslogs-region": "us-east-2"
+                          }
+                        },
+                        "environment": [
+                          {
+                            "name": "ENVIRONMENT",
+                            "value": "production"
+                          },
+                          {
+                            "name": "POSTGRES_DB",
+                            "value": "flos"
+                          }
+                        ],
+                        "secrets": [
+                          {
+                            "name": "POSTGRES_USER",
+                            "valueFrom": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  },
+                                  ":username::"
+                                ]
+                              ]
+                            }
+                          },
+                          {
+                            "name": "POSTGRES_PASSWORD",
+                            "valueFrom": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  },
+                                  ":password::"
+                                ]
+                              ]
+                            }
+                          },
+                          {
+                            "name": "POSTGRES_HOST",
+                            "valueFrom": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  },
+                                  ":host::"
+                                ]
+                              ]
+                            }
+                          },
+                          {
+                            "name": "POSTGRES_PORT",
+                            "valueFrom": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  },
+                                  ":port::"
+                                ]
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "cpu": "256",
+                    "executionRoleArn": {
+                      "Fn::GetAtt": [
+                        "WorkerTaskDefExecutionRoleA889F066",
+                        "Arn"
+                      ]
+                    },
+                    "family": "FlosAppStackWorkerTaskDef10AFBD4A",
+                    "memory": "512",
+                    "networkMode": "awsvpc",
+                    "requiresCompatibilities": [
+                      "FARGATE"
+                    ],
+                    "taskRoleArn": {
+                      "Fn::GetAtt": [
+                        "WorkerTaskDefTaskRole7915D243",
+                        "Arn"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecs.CfnTaskDefinition",
+                  "version": "2.110.0"
+                }
+              },
+              "WorkerContainer": {
+                "id": "WorkerContainer",
+                "path": "FlosAppStack/WorkerTaskDef/WorkerContainer",
+                "children": {
+                  "LogGroup": {
+                    "id": "LogGroup",
+                    "path": "FlosAppStack/WorkerTaskDef/WorkerContainer/LogGroup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "FlosAppStack/WorkerTaskDef/WorkerContainer/LogGroup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                          "aws:cdk:cloudformation:props": {}
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                          "version": "2.110.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecs.ContainerDefinition",
+                  "version": "2.110.0"
+                }
+              },
+              "ExecutionRole": {
+                "id": "ExecutionRole",
+                "path": "FlosAppStack/WorkerTaskDef/ExecutionRole",
+                "children": {
+                  "ImportExecutionRole": {
+                    "id": "ImportExecutionRole",
+                    "path": "FlosAppStack/WorkerTaskDef/ExecutionRole/ImportExecutionRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "FlosAppStack/WorkerTaskDef/ExecutionRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "ecs-tasks.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.110.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "FlosAppStack/WorkerTaskDef/ExecutionRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "FlosAppStack/WorkerTaskDef/ExecutionRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "ecr:BatchCheckLayerAvailability",
+                                    "ecr:BatchGetImage",
+                                    "ecr:GetDownloadUrlForLayer"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316"
+                                  }
+                                },
+                                {
+                                  "Action": "ecr:GetAuthorizationToken",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                },
+                                {
+                                  "Action": [
+                                    "logs:CreateLogStream",
+                                    "logs:PutLogEvents"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "WorkerTaskDefWorkerContainerLogGroup93EC44E5",
+                                      "Arn"
+                                    ]
+                                  }
+                                },
+                                {
+                                  "Action": [
+                                    "secretsmanager:DescribeSecret",
+                                    "secretsmanager:GetSecretValue"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "WorkerTaskDefExecutionRoleDefaultPolicy7E2F924A",
+                            "roles": [
+                              {
+                                "Ref": "WorkerTaskDefExecutionRoleA889F066"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.110.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.110.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ecs.FargateTaskDefinition",
+              "version": "2.110.0"
+            }
+          },
+          "WorkerService": {
+            "id": "WorkerService",
+            "path": "FlosAppStack/WorkerService",
+            "children": {
+              "Service": {
+                "id": "Service",
+                "path": "FlosAppStack/WorkerService/Service",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECS::Service",
+                  "aws:cdk:cloudformation:props": {
+                    "cluster": {
+                      "Ref": "FlosCluster7B2ABFA0"
+                    },
+                    "deploymentConfiguration": {
+                      "maximumPercent": 200,
+                      "minimumHealthyPercent": 50,
+                      "alarms": {
+                        "alarmNames": [],
+                        "enable": false,
+                        "rollback": false
+                      }
+                    },
+                    "desiredCount": 1,
+                    "enableEcsManagedTags": false,
+                    "launchType": "FARGATE",
+                    "networkConfiguration": {
+                      "awsvpcConfiguration": {
+                        "assignPublicIp": "ENABLED",
+                        "subnets": [
+                          {
+                            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet1Subnet076D219138BAFFAC"
+                          },
+                          {
+                            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet2SubnetD49BAB82243E3E32"
+                          }
+                        ],
+                        "securityGroups": [
+                          {
+                            "Fn::GetAtt": [
+                              "AppSecurityGroupC396D536",
+                              "GroupId"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "taskDefinition": {
+                      "Ref": "WorkerTaskDef3CFCC8D9"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ecs.CfnService",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ecs.FargateService",
+              "version": "2.110.0"
+            }
+          },
+          "ClusterName": {
+            "id": "ClusterName",
+            "path": "FlosAppStack/ClusterName",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.110.0"
+            }
+          },
+          "WorkerTaskDefArn": {
+            "id": "WorkerTaskDefArn",
+            "path": "FlosAppStack/WorkerTaskDefArn",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.110.0"
+            }
+          },
+          "AppSecurityGroupId": {
+            "id": "AppSecurityGroupId",
+            "path": "FlosAppStack/AppSecurityGroupId",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.110.0"
+            }
+          },
+          "AppSubnetIds": {
+            "id": "AppSubnetIds",
+            "path": "FlosAppStack/AppSubnetIds",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.110.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "FlosAppStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "FlosAppStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.110.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.4"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "FlosAppStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.110.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "FlosAppStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.110.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.110.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.4.4"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.110.0"
+    }
+  }
+}

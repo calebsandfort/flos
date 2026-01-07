@@ -15,7 +15,7 @@ class NetworkDbStack(Stack):
         self.vpc = ec2.Vpc(
             self, "FlosVpc",
             max_azs=2,
-            nat_gateways=1, # Save cost for dev
+            nat_gateways=0, # No NAT Gateways to save cost
         )
 
         # Database
@@ -26,7 +26,7 @@ class NetworkDbStack(Stack):
             ),
             vpc=self.vpc,
             vpc_subnets=ec2.SubnetSelection(
-                subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS
+                subnet_type=ec2.SubnetType.PRIVATE_ISOLATED
             ),
             instance_type=ec2.InstanceType.of(
                 ec2.InstanceClass.BURSTABLE3,

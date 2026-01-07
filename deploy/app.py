@@ -22,6 +22,7 @@ app_stack = AppStack(app, "FlosAppStack",
     vpc=network.vpc,
     repo_api=ecr.repo_api,
     repo_worker=ecr.repo_worker,
+    repo_frontend=ecr.repo_frontend,
     db=network.db,
     image_tag=tag,
     env=env

@@ -1,0 +1,20 @@
+{
+  "version": "35.0.0",
+  "files": {
+    "6d724ffdb617bd20ef9a7147df2e3de850249d1a432c97258123601b11b4a666": {
+      "source": {
+        "path": "FlosNetworkDbStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "497706801192-us-east-2": {
+          "bucketName": "cdk-hnb659fds-assets-497706801192-us-east-2",
+          "objectKey": "6d724ffdb617bd20ef9a7147df2e3de850249d1a432c97258123601b11b4a666.json",
+          "region": "us-east-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-file-publishing-role-497706801192-us-east-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

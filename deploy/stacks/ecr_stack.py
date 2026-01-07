@@ -13,11 +13,20 @@ class EcrStack(Stack):
         self.repo_api = ecr.Repository(
             self, "ApiRepo",
             repository_name="flos-api",
-            removal_policy=RemovalPolicy.DESTROY, # For dev/demo only, usually RETAIN
+            removal_policy=RemovalPolicy.DESTROY, 
+            empty_on_delete=True,
         )
 
         self.repo_worker = ecr.Repository(
             self, "WorkerRepo",
             repository_name="flos-worker",
             removal_policy=RemovalPolicy.DESTROY,
+            empty_on_delete=True,
+        )
+
+        self.repo_frontend = ecr.Repository(
+            self, "FrontendRepo",
+            repository_name="flos-frontend",
+            removal_policy=RemovalPolicy.DESTROY,
+            empty_on_delete=True,
         )

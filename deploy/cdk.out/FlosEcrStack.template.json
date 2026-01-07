@@ -1,0 +1,109 @@
+{
+ "Resources": {
+  "ApiRepoEFA7BA97": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "RepositoryName": "flos-api"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "FlosEcrStack/ApiRepo/Resource"
+   }
+  },
+  "WorkerRepoEE566D3E": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "RepositoryName": "flos-worker"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "FlosEcrStack/WorkerRepo/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/zPSMzQ00DNQTCwv1k1OydbNyUzSqw4uSUzO1kksL45PTS7Sqw5KLcgvzizJL6rUcU7LQ/BqIdzi/NKi5NRanYDKkoz8PH1jPUNjPVPFrOLMTN2i0rySzNxUvSAIDQDSj+elbQAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosEcrStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ApiRepoEFA7BA97",
+     "Arn"
+    ]
+   },
+   "Export": {
+    "Name": "FlosEcrStack:ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA"
+   }
+  },
+  "ExportsOutputRefApiRepoEFA7BA97FC7F6607": {
+   "Value": {
+    "Ref": "ApiRepoEFA7BA97"
+   },
+   "Export": {
+    "Name": "FlosEcrStack:ExportsOutputRefApiRepoEFA7BA97FC7F6607"
+   }
+  },
+  "ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316": {
+   "Value": {
+    "Fn::GetAtt": [
+     "WorkerRepoEE566D3E",
+     "Arn"
+    ]
+   },
+   "Export": {
+    "Name": "FlosEcrStack:ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316"
+   }
+  },
+  "ExportsOutputRefWorkerRepoEE566D3E36CC6BFB": {
+   "Value": {
+    "Ref": "WorkerRepoEE566D3E"
+   },
+   "Export": {
+    "Name": "FlosEcrStack:ExportsOutputRefWorkerRepoEE566D3E36CC6BFB"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

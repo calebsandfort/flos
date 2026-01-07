@@ -1,0 +1,20 @@
+{
+  "version": "35.0.0",
+  "files": {
+    "254cbf6c0fed1c0edce4cf911197b9c26aa84929af26687871aa8fdb776e35d8": {
+      "source": {
+        "path": "FlosEcrStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "497706801192-us-east-2": {
+          "bucketName": "cdk-hnb659fds-assets-497706801192-us-east-2",
+          "objectKey": "254cbf6c0fed1c0edce4cf911197b9c26aa84929af26687871aa8fdb776e35d8.json",
+          "region": "us-east-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-file-publishing-role-497706801192-us-east-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

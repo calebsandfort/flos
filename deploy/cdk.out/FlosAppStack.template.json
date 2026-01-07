@@ -1,0 +1,759 @@
+{
+ "Resources": {
+  "FlosCluster7B2ABFA0": {
+   "Type": "AWS::ECS::Cluster",
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/FlosCluster/Resource"
+   }
+  },
+  "AppSecurityGroupC396D536": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security Group for Flos API and Worker",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow API access from anywhere",
+      "FromPort": 8000,
+      "IpProtocol": "tcp",
+      "ToPort": 8000
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpc9AB3490C6658D48D"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/AppSecurityGroup/Resource"
+   }
+  },
+  "DbIngressFromApp": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Allow access from App SG",
+    "FromPort": 5432,
+    "GroupId": {
+     "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputFnGetAttFlosDBSecurityGroupF0625AB5GroupIdF69568DA"
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "AppSecurityGroupC396D536",
+      "GroupId"
+     ]
+    },
+    "ToPort": 5432
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/DbIngressFromApp"
+   }
+  },
+  "ApiTaskDefTaskRole76FB19FA": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/ApiTaskDef/TaskRole/Resource"
+   }
+  },
+  "ApiTaskDef37DBDBD0": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "ENVIRONMENT",
+        "Value": "production"
+       },
+       {
+        "Name": "POSTGRES_DB",
+        "Value": "flos"
+       }
+      ],
+      "Essential": true,
+      "Image": {
+       "Fn::Join": [
+        "",
+        [
+         {
+          "Fn::Select": [
+           4,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA"
+             }
+            ]
+           }
+          ]
+         },
+         ".dkr.ecr.",
+         {
+          "Fn::Select": [
+           3,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA"
+             }
+            ]
+           }
+          ]
+         },
+         ".",
+         {
+          "Ref": "AWS::URLSuffix"
+         },
+         "/",
+         {
+          "Fn::ImportValue": "FlosEcrStack:ExportsOutputRefApiRepoEFA7BA97FC7F6607"
+         },
+         ":latest"
+        ]
+       ]
+      },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "ApiTaskDefApiContainerLogGroup0ACF4D7F"
+        },
+        "awslogs-stream-prefix": "flos-api",
+        "awslogs-region": "us-east-2"
+       }
+      },
+      "Name": "ApiContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 8000,
+        "Protocol": "tcp"
+       }
+      ],
+      "Secrets": [
+       {
+        "Name": "POSTGRES_USER",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+           },
+           ":username::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "POSTGRES_PASSWORD",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+           },
+           ":password::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "POSTGRES_HOST",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+           },
+           ":host::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "POSTGRES_PORT",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+           },
+           ":port::"
+          ]
+         ]
+        }
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "ApiTaskDefExecutionRoleE6ABB053",
+      "Arn"
+     ]
+    },
+    "Family": "FlosAppStackApiTaskDef2355B7AD",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "ApiTaskDefTaskRole76FB19FA",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/ApiTaskDef/Resource"
+   }
+  },
+  "ApiTaskDefApiContainerLogGroup0ACF4D7F": {
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/ApiTaskDef/ApiContainer/LogGroup/Resource"
+   }
+  },
+  "ApiTaskDefExecutionRoleE6ABB053": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/ApiTaskDef/ExecutionRole/Resource"
+   }
+  },
+  "ApiTaskDefExecutionRoleDefaultPolicy358EAD94": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA"
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ApiTaskDefApiContainerLogGroup0ACF4D7F",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiTaskDefExecutionRoleDefaultPolicy358EAD94",
+    "Roles": [
+     {
+      "Ref": "ApiTaskDefExecutionRoleE6ABB053"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/ApiTaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiServiceC9037CF0": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "FlosCluster7B2ABFA0"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "LaunchType": "FARGATE",
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "ENABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "AppSecurityGroupC396D536",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet1Subnet076D219138BAFFAC"
+       },
+       {
+        "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet2SubnetD49BAB82243E3E32"
+       }
+      ]
+     }
+    },
+    "TaskDefinition": {
+     "Ref": "ApiTaskDef37DBDBD0"
+    }
+   },
+   "DependsOn": [
+    "ApiTaskDefTaskRole76FB19FA"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/ApiService/Service"
+   }
+  },
+  "WorkerTaskDefTaskRole7915D243": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/WorkerTaskDef/TaskRole/Resource"
+   }
+  },
+  "WorkerTaskDef3CFCC8D9": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "ENVIRONMENT",
+        "Value": "production"
+       },
+       {
+        "Name": "POSTGRES_DB",
+        "Value": "flos"
+       }
+      ],
+      "Essential": true,
+      "Image": {
+       "Fn::Join": [
+        "",
+        [
+         {
+          "Fn::Select": [
+           4,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316"
+             }
+            ]
+           }
+          ]
+         },
+         ".dkr.ecr.",
+         {
+          "Fn::Select": [
+           3,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316"
+             }
+            ]
+           }
+          ]
+         },
+         ".",
+         {
+          "Ref": "AWS::URLSuffix"
+         },
+         "/",
+         {
+          "Fn::ImportValue": "FlosEcrStack:ExportsOutputRefWorkerRepoEE566D3E36CC6BFB"
+         },
+         ":latest"
+        ]
+       ]
+      },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "WorkerTaskDefWorkerContainerLogGroup93EC44E5"
+        },
+        "awslogs-stream-prefix": "flos-worker",
+        "awslogs-region": "us-east-2"
+       }
+      },
+      "Name": "WorkerContainer",
+      "Secrets": [
+       {
+        "Name": "POSTGRES_USER",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+           },
+           ":username::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "POSTGRES_PASSWORD",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+           },
+           ":password::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "POSTGRES_HOST",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+           },
+           ":host::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "POSTGRES_PORT",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+           },
+           ":port::"
+          ]
+         ]
+        }
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "WorkerTaskDefExecutionRoleA889F066",
+      "Arn"
+     ]
+    },
+    "Family": "FlosAppStackWorkerTaskDef10AFBD4A",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "WorkerTaskDefTaskRole7915D243",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/WorkerTaskDef/Resource"
+   }
+  },
+  "WorkerTaskDefWorkerContainerLogGroup93EC44E5": {
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/WorkerTaskDef/WorkerContainer/LogGroup/Resource"
+   }
+  },
+  "WorkerTaskDefExecutionRoleA889F066": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/WorkerTaskDef/ExecutionRole/Resource"
+   }
+  },
+  "WorkerTaskDefExecutionRoleDefaultPolicy7E2F924A": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "FlosEcrStack:ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316"
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "WorkerTaskDefWorkerContainerLogGroup93EC44E5",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "WorkerTaskDefExecutionRoleDefaultPolicy7E2F924A",
+    "Roles": [
+     {
+      "Ref": "WorkerTaskDefExecutionRoleA889F066"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/WorkerTaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "WorkerService99815FA9": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "FlosCluster7B2ABFA0"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "LaunchType": "FARGATE",
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "ENABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "AppSecurityGroupC396D536",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet1Subnet076D219138BAFFAC"
+       },
+       {
+        "Fn::ImportValue": "FlosNetworkDbStack:ExportsOutputRefFlosVpcPublicSubnet2SubnetD49BAB82243E3E32"
+       }
+      ]
+     }
+    },
+    "TaskDefinition": {
+     "Ref": "WorkerTaskDef3CFCC8D9"
+    }
+   },
+   "DependsOn": [
+    "WorkerTaskDefTaskRole7915D243"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/WorkerService/Service"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/32OzU4DMQyEn6X3rOm26hMUgZCQqHZ7RyG4i9k0qWyHahXl3dH+FCEOnObz2DPyBup6DeuVvUrl3vvK0xvkVq3rjb3Ka0YnkPc+iSKb/Snc8MFyZxWPVvp7PFEgpRjGg79ODGopIP/ylmyL/EUOx9CCxaDbQG7RJSYdHjmmy7z+z3gKHaNIMWTPkJvop8pJD9GTG8ZxpmJ87ATyc+x+um5cimlQYuL5pZekl6RT0+IWcxj0I4a7LdRb2K0+hajiFJTOCM2s3xLD3NBPAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "FlosAppStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ApiServiceName": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ApiServiceC9037CF0",
+     "Name"
+    ]
+   }
+  },
+  "ClusterName": {
+   "Value": {
+    "Ref": "FlosCluster7B2ABFA0"
+   }
+  },
+  "WorkerTaskDefArn": {
+   "Value": {
+    "Ref": "WorkerTaskDef3CFCC8D9"
+   }
+  },
+  "AppSecurityGroupId": {
+   "Value": {
+    "Fn::GetAtt": [
+     "AppSecurityGroupC396D536",
+     "GroupId"
+    ]
+   }
+  },
+  "AppSubnetIds": {
+   "Value": ""
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

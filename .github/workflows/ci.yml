@@ -82,6 +82,20 @@ jobs:
             .
       # Ideally push to registry here
 
+  build-frontend:
+    name: Build Frontend Image
+    # needs: test-frontend # (If we had tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Frontend Docker Image
+        run: |
+          docker build \
+            -f Dockerfile.frontend \
+            -t flos-frontend:latest \
+            -t flos-frontend:${{ github.sha }} \
+            .
+
   deploy:
     name: Deploy to AWS
     needs: [build-api, build-worker]
@@ -140,6 +154,17 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -f Dockerfile.worker -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Build and Push Frontend Image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: flos-frontend
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          # Use production target if your Dockerfile supports it, usually simpler just to build
+          docker build -f Dockerfile.frontend -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 

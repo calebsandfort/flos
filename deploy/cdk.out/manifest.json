@@ -1,0 +1,493 @@
+{
+  "version": "35.0.0",
+  "artifacts": {
+    "FlosEcrStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "FlosEcrStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "FlosEcrStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://497706801192/us-east-2",
+      "properties": {
+        "templateFile": "FlosEcrStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-deploy-role-497706801192-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-cfn-exec-role-497706801192-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-497706801192-us-east-2/254cbf6c0fed1c0edce4cf911197b9c26aa84929af26687871aa8fdb776e35d8.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "FlosEcrStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-lookup-role-497706801192-us-east-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "FlosEcrStack.assets"
+      ],
+      "metadata": {
+        "/FlosEcrStack/ApiRepo/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRepoEFA7BA97"
+          }
+        ],
+        "/FlosEcrStack/WorkerRepo/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WorkerRepoEE566D3E"
+          }
+        ],
+        "/FlosEcrStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/FlosEcrStack/Exports/Output{\"Fn::GetAtt\":[\"ApiRepoEFA7BA97\",\"Arn\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttApiRepoEFA7BA97ArnACFF43BA"
+          }
+        ],
+        "/FlosEcrStack/Exports/Output{\"Ref\":\"ApiRepoEFA7BA97\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefApiRepoEFA7BA97FC7F6607"
+          }
+        ],
+        "/FlosEcrStack/Exports/Output{\"Fn::GetAtt\":[\"WorkerRepoEE566D3E\",\"Arn\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttWorkerRepoEE566D3EArn9AD78316"
+          }
+        ],
+        "/FlosEcrStack/Exports/Output{\"Ref\":\"WorkerRepoEE566D3E\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefWorkerRepoEE566D3E36CC6BFB"
+          }
+        ],
+        "/FlosEcrStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/FlosEcrStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "FlosEcrStack"
+    },
+    "FlosNetworkDbStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "FlosNetworkDbStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "FlosNetworkDbStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://497706801192/us-east-2",
+      "properties": {
+        "templateFile": "FlosNetworkDbStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-deploy-role-497706801192-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-cfn-exec-role-497706801192-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-497706801192-us-east-2/6d724ffdb617bd20ef9a7147df2e3de850249d1a432c97258123601b11b4a666.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "FlosNetworkDbStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-lookup-role-497706801192-us-east-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "FlosNetworkDbStack.assets"
+      ],
+      "metadata": {
+        "/FlosNetworkDbStack/FlosVpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpc9AB3490C"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcPublicSubnet1Subnet076D2191"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcPublicSubnet1RouteTableABC70481"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcPublicSubnet1RouteTableAssociation61F67520"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcPublicSubnet1DefaultRouteB17EDB1E"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcPublicSubnet2SubnetD49BAB82"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcPublicSubnet2RouteTableDE3A6638"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcPublicSubnet2RouteTableAssociationB2D6A071"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcPublicSubnet2DefaultRoute3B664F56"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcIsolatedSubnet1SubnetEACDC614"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcIsolatedSubnet1RouteTableD9C54CF0"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/IsolatedSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcIsolatedSubnet1RouteTableAssociation5CB94006"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcIsolatedSubnet2Subnet6776EDD4"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcIsolatedSubnet2RouteTable0BCA53E4"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/IsolatedSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcIsolatedSubnet2RouteTableAssociation7A4B6421"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcIGWC1AC8BCE"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosVpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosVpcVPCGW78A389DE"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosDB/SubnetGroup/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosDBSubnetGroupA32F66EB"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosDB/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosDBSecurityGroupF0625AB5"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosDB/Secret/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosDBSecretEF85A69B"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosDB/Secret/Attachment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosDBSecretAttachmentDE9154FC"
+          }
+        ],
+        "/FlosNetworkDbStack/FlosDB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosDB33621BE8"
+          }
+        ],
+        "/FlosNetworkDbStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/FlosNetworkDbStack/Exports/Output{\"Ref\":\"FlosVpc9AB3490C\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefFlosVpc9AB3490C6658D48D"
+          }
+        ],
+        "/FlosNetworkDbStack/Exports/Output{\"Fn::GetAtt\":[\"FlosDBSecurityGroupF0625AB5\",\"GroupId\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttFlosDBSecurityGroupF0625AB5GroupIdF69568DA"
+          }
+        ],
+        "/FlosNetworkDbStack/Exports/Output{\"Ref\":\"FlosDBSecretAttachmentDE9154FC\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefFlosDBSecretAttachmentDE9154FC00B2820B"
+          }
+        ],
+        "/FlosNetworkDbStack/Exports/Output{\"Ref\":\"FlosVpcPublicSubnet1Subnet076D2191\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefFlosVpcPublicSubnet1Subnet076D219138BAFFAC"
+          }
+        ],
+        "/FlosNetworkDbStack/Exports/Output{\"Ref\":\"FlosVpcPublicSubnet2SubnetD49BAB82\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefFlosVpcPublicSubnet2SubnetD49BAB82243E3E32"
+          }
+        ],
+        "/FlosNetworkDbStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/FlosNetworkDbStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "FlosNetworkDbStack"
+    },
+    "FlosAppStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "FlosAppStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "FlosAppStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://497706801192/us-east-2",
+      "properties": {
+        "templateFile": "FlosAppStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-deploy-role-497706801192-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-cfn-exec-role-497706801192-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-497706801192-us-east-2/f17ce30d5754f3d4ac20af349ac53748ffce3b321a78b140049bafae12a67c0c.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "FlosAppStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::497706801192:role/cdk-hnb659fds-lookup-role-497706801192-us-east-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "FlosNetworkDbStack",
+        "FlosEcrStack",
+        "FlosAppStack.assets"
+      ],
+      "metadata": {
+        "/FlosAppStack/FlosCluster/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FlosCluster7B2ABFA0"
+          }
+        ],
+        "/FlosAppStack/AppSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppSecurityGroupC396D536"
+          }
+        ],
+        "/FlosAppStack/DbIngressFromApp": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DbIngressFromApp"
+          }
+        ],
+        "/FlosAppStack/ApiTaskDef/TaskRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiTaskDefTaskRole76FB19FA"
+          }
+        ],
+        "/FlosAppStack/ApiTaskDef/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiTaskDef37DBDBD0"
+          }
+        ],
+        "/FlosAppStack/ApiTaskDef/ApiContainer/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiTaskDefApiContainerLogGroup0ACF4D7F"
+          }
+        ],
+        "/FlosAppStack/ApiTaskDef/ExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiTaskDefExecutionRoleE6ABB053"
+          }
+        ],
+        "/FlosAppStack/ApiTaskDef/ExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiTaskDefExecutionRoleDefaultPolicy358EAD94"
+          }
+        ],
+        "/FlosAppStack/ApiService/Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiServiceC9037CF0"
+          }
+        ],
+        "/FlosAppStack/ApiServiceName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiServiceName"
+          }
+        ],
+        "/FlosAppStack/WorkerTaskDef/TaskRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WorkerTaskDefTaskRole7915D243"
+          }
+        ],
+        "/FlosAppStack/WorkerTaskDef/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WorkerTaskDef3CFCC8D9"
+          }
+        ],
+        "/FlosAppStack/WorkerTaskDef/WorkerContainer/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WorkerTaskDefWorkerContainerLogGroup93EC44E5"
+          }
+        ],
+        "/FlosAppStack/WorkerTaskDef/ExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WorkerTaskDefExecutionRoleA889F066"
+          }
+        ],
+        "/FlosAppStack/WorkerTaskDef/ExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WorkerTaskDefExecutionRoleDefaultPolicy7E2F924A"
+          }
+        ],
+        "/FlosAppStack/WorkerService/Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WorkerService99815FA9"
+          }
+        ],
+        "/FlosAppStack/ClusterName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ClusterName"
+          }
+        ],
+        "/FlosAppStack/WorkerTaskDefArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WorkerTaskDefArn"
+          }
+        ],
+        "/FlosAppStack/AppSecurityGroupId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppSecurityGroupId"
+          }
+        ],
+        "/FlosAppStack/AppSubnetIds": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppSubnetIds"
+          }
+        ],
+        "/FlosAppStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/FlosAppStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/FlosAppStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "FlosAppStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
