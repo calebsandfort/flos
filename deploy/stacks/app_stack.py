@@ -123,6 +123,7 @@ class AppStack(Stack):
         listener.add_targets(
             "ApiTarget",
             port=8000,
+            protocol=elbv2.ApplicationProtocol.HTTP,
             targets=[self.api_service],
             priority=10,
             conditions=[elbv2.ListenerCondition.path_patterns(["/api/*"])],
@@ -165,6 +166,7 @@ class AppStack(Stack):
         listener.add_targets(
             "FrontendTarget",
             port=3000,
+            protocol=elbv2.ApplicationProtocol.HTTP,
             targets=[self.frontend_service],
             priority=5,
              # Catch all, but we give it a priority so it's explicit. 
